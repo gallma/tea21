@@ -12,7 +12,7 @@ int foo2;
 int data =4711;
 int data2 =4711;
 const int rodata = 42;
-
+const int rodata2 = 42;
 auto main(int argc, char **argv) -> int
 {
     /**
