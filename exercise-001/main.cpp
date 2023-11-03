@@ -8,7 +8,7 @@
 #include "config.h"
 
 int foo;
-
+int foo2;
 int data =4711;
 
 const int rodata = 42;
