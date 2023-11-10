@@ -46,4 +46,7 @@ auto main(int argc, char **argv) -> int
         list.traverse(printer);
     }         /* this calls the DTOR of the list*/
     return 0; /* exit gracefully*/
+
+
+    
 }
