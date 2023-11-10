@@ -20,7 +20,6 @@ auto main(int argc, char **argv) -> int
         return app.exit(e);
     }
     std::vector<int> data(count);
-    fmt::print("Hello, {}!\n", count, app.get_name());
 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
@@ -37,13 +36,13 @@ auto main(int argc, char **argv) -> int
 
      auto end = std::chrono::system_clock::now();
     auto elapsed = end - start;
-
+    printf("Sort vector: \n");
     for(int i = 0; i < count; i++)
     {
         fmt::print("{} ", data[i]);
     }
 
-    fmt::print("\nTime for sorting: {}", elapsed);
+    fmt::print("\nTime for sorting:\n{}",elapsed);
 
     return 0;
 }
