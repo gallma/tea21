@@ -1,23 +1,18 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
-
+#include <vector>
 #include "CLI/CLI.hpp"
 #include "config.h"
 
 auto main(int argc, char **argv) -> int
 {
-    /**
-     * CLI11 is a command line parser to add command line options
-     * More info at https://github.com/CLIUtils/CLI11#usage
-     */
+    auto count = 20;
 
-    int count =20;
-    std::srand(std::time(0));
     CLI::App app{PROJECT_NAME};
     try
     {
         app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
-        app.add_option("-c,--count", count, "Variable");
+        app.add_option("-c,--count", count, "Variable count als Integer");
         app.parse(argc, argv);
     }
     catch (const CLI::ParseError &e)
@@ -25,23 +20,30 @@ auto main(int argc, char **argv) -> int
         return app.exit(e);
     }
     std::vector<int> data(count);
-    std::srand(std::time(0));
-    std::generate(data.begin(), data.end(), []() { return std::rand() % 100 + 1; });
+    fmt::print("Hello, {}!\n", count, app.get_name());
 
-        /**
-     * The {fmt} lib is a cross platform library for printing and formatting text
-     * it is much more convenient than std::cout and printf
-     * More info at https://fmt.dev/latest/api.html
-     */
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-    fmt::print("Generated vector: ");
-    for (const auto &value : data)
+    for (int i = 0; i < count; i++) 
     {
-        fmt::print("{} ", value);
+        data[i] = rand()%100 +1;
+        
+
     }
     fmt::print("\n");
 
-    /* INSERT YOUR CODE HERE */
+    auto start = std::chrono::system_clock::now();
+    std::sort(data.begin(), data.end());
 
-    return 0; /* exit gracefully*/
+     auto end = std::chrono::system_clock::now();
+    auto elapsed = end - start;
+
+    for(int i = 0; i < count; i++)
+    {
+        fmt::print("{} ", data[i]);
+    }
+
+    fmt::print("\nTime for sorting: {}", elapsed);
+
+    return 0;
 }
