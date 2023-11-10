@@ -28,7 +28,7 @@ auto main(int argc, char **argv) -> int
     std::srand(std::time(0));
     std::generate(data.begin(), data.end(), []() { return std::rand() % 100 + 1; });
 
-       /**
+        /**
      * The {fmt} lib is a cross platform library for printing and formatting text
      * it is much more convenient than std::cout and printf
      * More info at https://fmt.dev/latest/api.html
