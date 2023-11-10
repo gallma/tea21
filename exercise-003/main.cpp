@@ -53,9 +53,6 @@ auto main(int argc, char **argv) -> int
         // Die Liste wird erneut gedruckt, um zu überprüfen, ob die Elemente korrekt eingefügt wurden
         list.traverse(printer);
     }
-
-
-
     return 0;
 }
 
