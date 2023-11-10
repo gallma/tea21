@@ -45,4 +45,5 @@ auto main(int argc, char **argv) -> int
     fmt::print("\nTime for sorting:\n{}",elapsed);
 
     return 0;
+    
 }
