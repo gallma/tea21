@@ -1,12 +1,7 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
-#include "linkedlist.h"
-
-void printer(const std::string &name)
-{
-    fmt::print("Printer: {}\n", name);
-}
+#include "vectorint.hpp"
 
 auto main(int argc, char **argv) -> int
 {
@@ -15,38 +10,62 @@ auto main(int argc, char **argv) -> int
      * it is much more convenient than std::cout and printf
      * More info at https://fmt.dev/latest/api.html
      */
-    fmt::print("Hello, {}!\n", "World");
+    fmt::print("Hello, World!\n");
 
+    VectorInt data(20);
+    data.print();
+
+    // resize the vector to 10 elements
+    auto resize_value = 10;
+    auto prev_size = data.size();
+    fmt::print("Perform a resize from {} to {}\n",prev_size,resize_value);
+    data.resize(resize_value);
+    if(resize_value != data.size()) {
+        fmt::print("A size mismatch detected expected value {} actual value {}\n",resize_value,data.size());
+        return 1;
+    }
+    fmt::print("Performed a resize from {} to {}\n",prev_size,resize_value);
     
+    resize_value = 42;
+    prev_size = data.size();
+    fmt::print("Perform a resize from {} to {}\n",prev_size,resize_value);
+    prev_size = data.size();
+    data.resize(resize_value);
+    if(resize_value != data.size()) {
+        fmt::print("A size mismatch detected expected value {} actual value {}\n",resize_value,data.size());
+        return 1;
+    }
+    fmt::print("Performed a resize from {} to {}\n",prev_size,resize_value);
 
-    const std::vector<std::string> names{"Hugo", "Franz", "Elisabeth", "Anton", "Gerhard", "Maria", "Hannelore"};
-    const std::vector<std::string> names2{"Ulf", "Ole", "Sepp", "Norton", "Kai", "Uschi", "Gert"};
+    // Testing the at method
+    fmt::print("Testing the at method by inserting elements ");
+    const auto value_to_insert = 4711;
+    for (int i = 0; i < data.size(); i++)
     {
-        LinkedList list;
-        fmt::print("------------------------------\n");
-        for (auto &name : names)
+        int& value = data.at(i);
+        value = value_to_insert;
+        if (value_to_insert != data.at(i))
         {
-            auto elem = new LinkedListNode(name);
-            // elem->print();
-            list.insert_tail(elem);
+            fmt::print("[failure]\n");
+            fmt::print("Value missmatch! Expected {} received {}\n", value_to_insert, data.at(i));
+            return 1;
         }
-        list.traverse(printer);
-        fmt::print("------------------------------\n");
-        for (auto &name : names2)
+    }
+    fmt::print("[success]\n");
+    data.print();
+    // resize and check values
+    fmt::print("Testing the at method by resizing after add ");
+    auto expected_value = value_to_insert;
+    data.resize(10);
+    for (int i = 0; i < data.size(); i++)
+    {
+        if (expected_value != data.at(i))
         {
-            auto elem = new LinkedListNode(name);
-            // elem->print();
-            list.insert_head(elem);
+            fmt::print("[failure]\n");
+            fmt::print("Value missmatch! Expected {} received {} at {}\n", expected_value, data.at(i),i);
+            return 1;
         }
-        fmt::print("------------------------------\n");
-        list.traverse(printer);
-        fmt::print("------------------------------\n");
-        fmt::print("Elements in the list: {}\n", list.size());
-        fmt::print("------------------------------\n");
-        list.traverse(printer);
-    }         /* this calls the DTOR of the list*/
+    }
+    fmt::print("[success]\n");
     return 0; /* exit gracefully*/
-
-
-    
 }
